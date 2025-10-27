@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-import japanize_matplotlib
+#import japanize_matplotlib
 
 # ページ設定
 st.set_page_config(page_title="ライバー配信分析", layout="wide")
@@ -29,9 +29,9 @@ y_axis = st.sidebar.selectbox("縦軸を選択", df.columns, index=1)
 # --- グラフ描画 ---
 fig, ax = plt.subplots()
 ax.scatter(df[x_axis], df[y_axis])
-ax.set_xlabel(x_axis)
-ax.set_ylabel(y_axis)
-ax.set_title(f"{x_axis} と {y_axis} の関係")
+ax.set_xlabel(x_axis, fontname="MS Gothic")
+ax.set_ylabel(y_axis, fontname="MS Gothic")
+ax.set_title(f"{x_axis} と {y_axis} の関係", fontname="MS Gothic")
 st.pyplot(fig)
 
 # --- 集計 ---
@@ -39,4 +39,5 @@ st.subheader("📈 指標サマリー")
 st.write(df.describe())
 
 st.caption("Powered by Streamlit / Created by ちゃり")
+
 
