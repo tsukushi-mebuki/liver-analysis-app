@@ -1,7 +1,13 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
+
 #import japanize_matplotlib
+import matplotlib.font_manager as fm
+import matplotlib.pyplot as plt
+
+font_path = "fonts/ipaexg.ttf"
+fontprop = fm.FontProperties(fname=font_path)
+plt.rcParams['font.family'] = fontprop.get_name()
 
 # ページ設定
 st.set_page_config(page_title="ライバー配信分析", layout="wide")
@@ -39,5 +45,6 @@ st.subheader("📈 指標サマリー")
 st.write(df.describe())
 
 st.caption("Powered by Streamlit / Created by ちゃり")
+
 
 
