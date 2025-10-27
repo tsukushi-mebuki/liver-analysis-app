@@ -1,24 +1,38 @@
 import streamlit as st
 import pandas as pd
-import japanize_matplotlib
+#import japanize_matplotlib
 import matplotlib.pyplot as plt
 from matplotlib import font_manager, rcParams
 
 # ✅ 日本語フォント設定（Windows・Mac・Linux対応）
 # 利用可能なフォントの中から自動で日本語フォントを選ぶ
-font_candidates = [
-    "MS Gothic",        # Windows
-    "Yu Gothic",        # Windows10+
-    "Noto Sans CJK JP", # Google / Linux
-    "IPAPGothic",       # IPAフォント
-    "TakaoGothic"       # Ubuntu日本語環境
-]
-available_fonts = [f for f in font_candidates if f in [font.name for font in font_manager.fontManager.ttflist]]
+#font_candidates = [
+#    "MS Gothic",        # Windows
+#    "Yu Gothic",        # Windows10+
+#    "Noto Sans CJK JP", # Google / Linux
+#    "IPAPGothic",       # IPAフォント
+#    "TakaoGothic"       # Ubuntu日本語環境
+#]
+#available_fonts = [f for f in font_candidates if f in [font.name for font in font_manager.fontManager.ttflist]]
+#
+#if available_fonts:
+#    rcParams['font.family'] = available_fonts[0]
+#else:
+#    st.warning("日本語フォントが見つかりません。文字化けする可能性があります。")
 
-if available_fonts:
-    rcParams['font.family'] = available_fonts[0]
-else:
-    st.warning("日本語フォントが見つかりません。文字化けする可能性があります。")
+# ---- 日本語フォント設定部 ----
+def setup_font():
+    ...
+    font_path = os.path.join(font_dir, "ipaexg.ttf")
+    if os.path.exists(font_path):
+        fm.fontManager.addfont(font_path)
+        plt.rcParams["font.family"] = "IPAexGothic"
+    else:
+        st.warning("⚠ フォントが見つかりません。fonts/ipaexg.ttf を配置してください。")
+        plt.rcParams["font.family"] = "DejaVu Sans"
+
+
+font_used = setup_font()
 
 # ---- ページ設定 ----
 st.set_page_config(page_title="ライバー配信分析", layout="wide")
