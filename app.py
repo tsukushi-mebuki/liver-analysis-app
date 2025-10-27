@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import japanize_matplotlib
 
 # ページ設定
 st.set_page_config(page_title="ライバー配信分析", layout="wide")
@@ -38,3 +39,4 @@ st.subheader("📈 指標サマリー")
 st.write(df.describe())
 
 st.caption("Powered by Streamlit / Created by ちゃり")
+
