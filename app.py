@@ -5,9 +5,18 @@ import pandas as pd
 import matplotlib.font_manager as fm
 import matplotlib.pyplot as plt
 
+# フォントファイルへのパス
 font_path = "fonts/ipaexg.ttf"
+
+# フォントプロパティの設定
 fontprop = fm.FontProperties(fname=font_path)
 plt.rcParams['font.family'] = fontprop.get_name()
+
+# フォントをmatplotlib全体に反映
+plt.rcParams['font.sans-serif'] = [fontprop.get_name()]
+plt.rcParams['axes.unicode_minus'] = False  # マイナス符号が化けないように
+
+
 
 # ページ設定
 st.set_page_config(page_title="ライバー配信分析", layout="wide")
@@ -35,9 +44,9 @@ y_axis = st.sidebar.selectbox("縦軸を選択", df.columns, index=1)
 # --- グラフ描画 ---
 fig, ax = plt.subplots()
 ax.scatter(df[x_axis], df[y_axis])
-ax.set_xlabel(x_axis, fontname="MS Gothic")
-ax.set_ylabel(y_axis, fontname="MS Gothic")
-ax.set_title(f"{x_axis} と {y_axis} の関係", fontname="MS Gothic")
+ax.set_xlabel(x_axis)
+ax.set_ylabel(y_axis)
+ax.set_title(f"{x_axis} と {y_axis} の関係")
 st.pyplot(fig)
 
 # --- 集計 ---
@@ -45,6 +54,7 @@ st.subheader("📈 指標サマリー")
 st.write(df.describe())
 
 st.caption("Powered by Streamlit / Created by ちゃり")
+
 
 
 
