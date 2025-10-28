@@ -72,6 +72,7 @@ ax.scatter(df[x_axis], df[y_axis])
 ax.set_xlabel(x_axis, fontproperties=fm.FontProperties(fname=os.path.join("fonts", "ipaexg.ttf")))
 ax.set_ylabel(y_axis, fontproperties=fm.FontProperties(fname=os.path.join("fonts", "ipaexg.ttf")))
 ax.set_title(f"{x_axis} と {y_axis} の関係", fontproperties=fm.FontProperties(fname=os.path.join("fonts", "ipaexg.ttf")))
+fig, ax = plt.subplots(figsize=figsize, constrained_layout=True)
 st.pyplot(fig)
 
 # ---- 集計 ----
@@ -79,5 +80,6 @@ st.subheader("📈 指標サマリー")
 st.write(df.describe())
 
 st.caption("Powered by Streamlit / Created by ちゃり")
+
 
 
