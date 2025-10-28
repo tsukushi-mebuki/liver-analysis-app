@@ -79,7 +79,8 @@ st.pyplot(fig)
 st.subheader("📈 指標サマリー")
 st.write(df.describe())
 
-st.caption("Powered by Streamlit / Created by ちゃり")
+st.caption("Powered by Streamlit / Created by つくし")
+
 
 
 
