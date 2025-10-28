@@ -22,14 +22,32 @@ from matplotlib import font_manager, rcParams
 
 # ---- 日本語フォント設定部 ----
 def setup_font():
-    ...
+    """日本語フォント設定を自動適用"""
+    try:
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+    except NameError:
+        base_dir = os.getcwd()  # __file__が使えない場合に備える
+
+    if os.name == "nt":  # Windows
+        plt.rcParams["font.family"] = "Meiryo"
+        plt.rcParams["axes.unicode_minus"] = False
+        return "Meiryo"
+
+    # Linux (Streamlit Cloudなど)
+    font_dir = os.path.join(base_dir, "fonts")
     font_path = os.path.join(font_dir, "ipaexg.ttf")
+
     if os.path.exists(font_path):
         fm.fontManager.addfont(font_path)
         plt.rcParams["font.family"] = "IPAexGothic"
+        font_name = "IPAexGothic"
     else:
         st.warning("⚠ フォントが見つかりません。fonts/ipaexg.ttf を配置してください。")
         plt.rcParams["font.family"] = "DejaVu Sans"
+        font_name = "DejaVu Sans"
+
+    plt.rcParams["axes.unicode_minus"] = False
+    return font_name
 
 
 font_used = setup_font()
@@ -69,3 +87,4 @@ st.subheader("📈 指標サマリー")
 st.write(df.describe())
 
 st.caption("Powered by Streamlit / Created by ちゃり")
+
