@@ -66,7 +66,8 @@ x_axis = st.sidebar.selectbox("横軸を選択", df.columns, index=0)
 y_axis = st.sidebar.selectbox("縦軸を選択", df.columns, index=1)
 
 # ---- グラフ描画 ----
-fig, ax = plt.subplots()
+#fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(3, 2))  # 幅10インチ、高さ6インチ
 ax.scatter(df[x_axis], df[y_axis])
 ax.set_xlabel(x_axis, fontproperties=fm.FontProperties(fname=os.path.join("fonts", "ipaexg.ttf")))
 ax.set_ylabel(y_axis, fontproperties=fm.FontProperties(fname=os.path.join("fonts", "ipaexg.ttf")))
@@ -78,4 +79,5 @@ st.subheader("📈 指標サマリー")
 st.write(df.describe())
 
 st.caption("Powered by Streamlit / Created by ちゃり")
+
 
