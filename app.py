@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 import pandas as pd
 #import japanize_matplotlib
@@ -87,4 +88,5 @@ st.subheader("📈 指標サマリー")
 st.write(df.describe())
 
 st.caption("Powered by Streamlit / Created by ちゃり")
+
 
