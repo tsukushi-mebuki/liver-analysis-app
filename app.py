@@ -1,25 +1,8 @@
 import os
 import streamlit as st
 import pandas as pd
-#import japanize_matplotlib
 import matplotlib.pyplot as plt
-from matplotlib import font_manager, rcParams
-
-# ✅ 日本語フォント設定（Windows・Mac・Linux対応）
-# 利用可能なフォントの中から自動で日本語フォントを選ぶ
-#font_candidates = [
-#    "MS Gothic",        # Windows
-#    "Yu Gothic",        # Windows10+
-#    "Noto Sans CJK JP", # Google / Linux
-#    "IPAPGothic",       # IPAフォント
-#    "TakaoGothic"       # Ubuntu日本語環境
-#]
-#available_fonts = [f for f in font_candidates if f in [font.name for font in font_manager.fontManager.ttflist]]
-#
-#if available_fonts:
-#    rcParams['font.family'] = available_fonts[0]
-#else:
-#    st.warning("日本語フォントが見つかりません。文字化けする可能性があります。")
+import matplotlib.font_manager as fm
 
 # ---- 日本語フォント設定部 ----
 def setup_font():
@@ -39,9 +22,9 @@ def setup_font():
     font_path = os.path.join(font_dir, "ipaexg.ttf")
 
     if os.path.exists(font_path):
-        fm.fontManager.addfont(font_path)
-        plt.rcParams["font.family"] = "IPAexGothic"
-        font_name = "IPAexGothic"
+        font_prop = fm.FontProperties(fname=font_path)
+        plt.rcParams['font.family'] = font_prop.get_name()
+        font_name = font_prop.get_name()
     else:
         st.warning("⚠ フォントが見つかりません。fonts/ipaexg.ttf を配置してください。")
         plt.rcParams["font.family"] = "DejaVu Sans"
@@ -57,14 +40,21 @@ font_used = setup_font()
 st.set_page_config(page_title="ライバー配信分析", layout="wide")
 st.title("🎤 ライバー配信分析ダッシュボード")
 
+st.caption(f"使用フォント: {font_used}")
+
 # ---- データアップロード ----
 uploaded_file = st.file_uploader("日次CSVデータをアップロード", type=["csv"])
 
 if uploaded_file:
     df = pd.read_csv(uploaded_file)
 else:
-    df = pd.read_csv("data/sample_data.csv")
-    st.info("サンプルデータを使用しています。")
+    sample_path = "data/sample_data.csv"
+    if os.path.exists(sample_path):
+        df = pd.read_csv(sample_path)
+        st.info("📄 サンプルデータを使用しています。")
+    else:
+        st.error("❌ CSVファイルが見つかりません。アップロードしてください。")
+        st.stop()
 
 # ---- データプレビュー ----
 st.subheader("📊 データプレビュー")
@@ -80,7 +70,7 @@ fig, ax = plt.subplots()
 ax.scatter(df[x_axis], df[y_axis])
 ax.set_xlabel(x_axis)
 ax.set_ylabel(y_axis)
-ax.set_title(f"{x_axis} と {y_axis} の関係")
+ax.set_title(f"{x_axis} と {y_axis} の関係", fontproperties=fm.FontProperties(fname=os.path.join("fonts", "ipaexg.ttf")))
 st.pyplot(fig)
 
 # ---- 集計 ----
@@ -88,5 +78,3 @@ st.subheader("📈 指標サマリー")
 st.write(df.describe())
 
 st.caption("Powered by Streamlit / Created by ちゃり")
-
-
